@@ -16,7 +16,7 @@ app.post('/callback', (req, res) => {
 
   spotifyApi.setAccessToken(token);
   spotifyApi.getMe().then(response => res.status(200).send(response));
-})
+});
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);

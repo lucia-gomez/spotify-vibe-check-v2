@@ -2,23 +2,23 @@ import React from 'react';
 import { SpotifyAuth } from 'react-spotify-auth';
 import { redirectUri, clientId, scopes, serverUrl } from './spotify';
 import axios from 'axios';
+import { ActionType, useStore } from './state.tsx';
 
 import 'react-spotify-auth/dist/index.css';
 
 function App() {
-  const [user, setUser] = React.useState();
+  const { state, dispatch } = useStore();
 
   const onAccessToken = (newToken) => {
     if (newToken != null) {
-      axios.post(serverUrl + '/callback', { token: newToken }).then(res => {
-        setUser(res.data.body);
-      });
+      axios.post(serverUrl + '/callback', { token: newToken });
+      dispatch({ action: ActionType.SetToken, payload: newToken });
     }
   };
 
   return (
     <div className='app'>
-      {user ? <h1>Hi {user.display_name}</h1>
+      {state.isAuth ? <h1>Hi</h1>
         : <SpotifyAuth
           redirectUri={redirectUri}
           clientID={clientId}
