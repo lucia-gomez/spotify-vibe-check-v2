@@ -9,12 +9,16 @@
     "spotify-web-api-node": "^5.0.2"
   },
   "scripts": {
-    "start": "cd server && node index.js",
+    "start": "node server",
     "heroku-postbuild": "cd client && npm install && npm run build"
   },
   "engines": {
     "node": "12.x"
   },
+  "cacheDirectories": [
+    "node_modules",
+    "client/node_modules"
+  ],
   "keywords": [],
   "author": "",
   "license": "ISC"
