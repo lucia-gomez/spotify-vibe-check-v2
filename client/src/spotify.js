@@ -1,5 +1,5 @@
 const isDev = process.env.NODE_ENV !== 'production';
-const liveUrl = "https://spotify-vibe-check.herokuapp.com/";
+const liveUrl = "https://spotify-vibe-check.herokuapp.com";
 export const redirectUri = isDev ? "http://localhost:3000/" : liveUrl;
 export const clientId = "38632b26273a47e28539a2b34468d660";
 
