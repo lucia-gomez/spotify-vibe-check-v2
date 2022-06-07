@@ -1,6 +1,6 @@
 import React from 'react';
 import { SpotifyAuth } from 'react-spotify-auth';
-import { redirectUri, clientId, scopes, server } from './spotify';
+import { redirectUri, clientId, scopes, serverUrl } from './spotify';
 import axios from 'axios';
 
 import 'react-spotify-auth/dist/index.css';
@@ -9,10 +9,8 @@ function App() {
   const [user, setUser] = React.useState();
 
   const onAccessToken = (newToken) => {
-    console.log('ONACCESSTOKEN');
     if (newToken != null) {
-      axios.post(server + '/callback', { token: newToken }).then(res => {
-        console.log('GOT USER');
+      axios.post(serverUrl + '/callback', { token: newToken }).then(res => {
         setUser(res.data.body);
       });
     }
