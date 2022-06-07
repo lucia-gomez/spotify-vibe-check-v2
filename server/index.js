@@ -10,7 +10,7 @@ const port = process.env.PORT || 8000;
 
 app.use(express.static(path.resolve(__dirname, '../client/build')));
 
-app.post('/auth', (req, res) => {
+app.post('/callback', (req, res) => {
   let spotifyApi = new spotifyWebApi();
   const token = req.body.token;
 

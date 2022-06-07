@@ -12,7 +12,7 @@ function App() {
   const onAccessToken = (newToken) => {
     if (newToken != null) {
       setToken(newToken);
-      axios.post(server + '/auth', { token: newToken }).then(res => {
+      axios.post(server + '/callback', { token: newToken }).then(res => {
         setUser(res.data.body);
       });
     }
