@@ -8,7 +8,3 @@ export const scopes = [
 ];
 
 export const server = "http://localhost:8000";
-
-// export const loginUrl = `${authEndpoint}?client_id=${clientId}&response_type=code&redirect_uri=${redirectUri}&scope=${scopes.join(
-//   "%20"
-// )}`;

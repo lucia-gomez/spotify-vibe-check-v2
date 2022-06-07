@@ -1,0 +1,16 @@
+{
+  "name": "spotify-vibe-check-v2",
+  "version": "1.0.0",
+  "description": "",
+  "proxy": "http://localhost:8000",
+  "scripts": {
+    "start": "node server",
+    "heroku-postbuild": "cd client && npm install && npm run build"
+  },
+  "engines": {
+    "node": "12.x"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

@@ -7,12 +7,6 @@ app.use(cors());
 app.use(express.json());
 const port = 8000;
 
-// const credentials = {
-//   clientId: "38632b26273a47e28539a2b34468d660",
-//   clientSecret: "e9c85b9cd03a4cd7a2ea1fd3b56b9a97",
-//   redirectUri: "http://localhost:3000/callback/",
-// };
-
 app.get('/', (req, res) => {
   console.log('Hello World!');
 });
