@@ -6,13 +6,13 @@ import axios from 'axios';
 import 'react-spotify-auth/dist/index.css';
 
 function App() {
-  const [token, setToken] = React.useState();
   const [user, setUser] = React.useState();
 
   const onAccessToken = (newToken) => {
+    console.log('ONACCESSTOKEN');
     if (newToken != null) {
-      setToken(newToken);
       axios.post(server + '/callback', { token: newToken }).then(res => {
+        console.log('GOT USER');
         setUser(res.data.body);
       });
     }
@@ -20,16 +20,14 @@ function App() {
 
   return (
     <div className='app'>
-      {token ? (
-        user && <h1>Hi {user.display_name}</h1>
-      ) : (
-        <SpotifyAuth
+      {user ? <h1>Hi {user.display_name}</h1>
+        : <SpotifyAuth
           redirectUri={redirectUri}
           clientID={clientId}
           scopes={scopes}
           onAccessToken={onAccessToken}
         />
-      )}
+      }
     </div>
   )
 }
