@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import UserInfo from './userInfo';
-import SpotifyLogo from '../assets/logo_white.png';
+import SpotifyLogo from '../assets/icon.png';
 
 const NavWrapper = styled.div`
   background-color: ${props => props.theme.black};
