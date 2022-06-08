@@ -16,15 +16,27 @@ const PlaylistItemDesktop = styled.div`
     transition: background-color 500ms ease;
   }
 
-  img {
-    border-radius: 6px;
-    width: 100%;
-    margin-bottom: 16px;
-  }
-
   @media only screen and (max-width: 576px) {
     display: none;
   }
+`;
+
+const ImageWrapper = styled.div`
+  position: relative;
+  width: 100%;
+  margin-bottom: 16px;
+  padding-bottom: 100%;
+`;
+
+const PlaylistImage = styled.img`
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  border-radius: 6px;
+  object-fit: cover;
+  object-position: center center;
 `;
 
 const PlaylistName = styled.p`
@@ -50,14 +62,19 @@ const PlaylistDescription = styled.p`
   color: ${props => props.theme.grayBodyText};
   font-weight: 500;
   font-size: 0.9em;
+  box-lines: 2;
 `;
 
 function PlaylistDesktop(props) {
   return (
     <PlaylistItemDesktop>
-      <img src={props.images[0]?.url} alt="Playlist cover" />
-      <PlaylistName>{props.name}</PlaylistName>
-      <PlaylistDescription>{props.description.length > 0 ? props.description : props.owner.display_name}</PlaylistDescription>
+      <ImageWrapper>
+        <PlaylistImage src={props.images[0]?.url} alt="Playlist cover" />
+      </ImageWrapper>
+      <div style={{ minHeight: 60 }}>
+        <PlaylistName>{props.name}</PlaylistName>
+        <PlaylistDescription>{props.description.length > 0 ? props.description : props.owner.display_name}</PlaylistDescription>
+      </div>
     </PlaylistItemDesktop>
   );
 }
@@ -68,30 +85,43 @@ const PlaylistItemMobile = styled.div`
   align-items: center;
   margin-bottom: 12px;
 
-  img {
-    border-radius: 4px;
-    width: 80px;
-    padding-right: 10px;
-  }
-
-  div {
-    display: flex;
-    flex-direction: column;
-  }
+  
 
   @media only screen and (min-width: 576px) {
     display: none;
   }
 `;
 
+const MobileCol = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const ImageWrapperMobile = styled.div`
+  width: 80px;
+  height: 80px;
+  border-radius: 4px;
+  padding-right: 10px;
+
+  img {
+    object-fit: cover;
+    object-position: center center;
+    height: 100%;
+    width: 100%;
+    border-radius: 4px;
+  }
+`;
+
 function PlaylistMobile(props) {
   return (
     <PlaylistItemMobile>
-      <img src={props.images[0]?.url} alt="Playlist cover" />
-      <div>
+      <ImageWrapperMobile>
+        <img src={props.images[0]?.url} alt="Playlist cover" />
+      </ImageWrapperMobile>
+      <MobileCol>
         <PlaylistName style={{ fontWeight: 600 }}>{props.name}</PlaylistName>
         <PlaylistDescription>{props.owner.display_name}</PlaylistDescription>
-      </div>
+      </MobileCol>
     </PlaylistItemMobile>
   );
 }
