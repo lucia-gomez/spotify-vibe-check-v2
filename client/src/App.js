@@ -3,6 +3,7 @@ import { SpotifyAuth } from 'react-spotify-auth';
 import { redirectUri, clientId, scopes, serverUrl } from './spotify';
 import axios from 'axios';
 import { ActionType, useStore } from './state.tsx';
+import PageLayout from './pages/layout';
 
 import 'react-spotify-auth/dist/index.css';
 
@@ -18,7 +19,8 @@ function App() {
 
   return (
     <div className='app'>
-      {state.isAuth ? <h1>Hi</h1>
+      {state.isAuth ?
+        <PageLayout />
         : <SpotifyAuth
           redirectUri={redirectUri}
           clientID={clientId}

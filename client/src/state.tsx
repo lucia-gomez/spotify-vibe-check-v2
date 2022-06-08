@@ -27,8 +27,8 @@ function Reducer(state: State, action: Action): State {
     case ActionType.SetUser:
       return {
         ...state,
-        userName: 'Name',
-        userPhotoUri: 'URI',
+        userName: action.payload.display_name,
+        userPhotoUri: action.payload.images[0]?.url,
       };
   }
 }
