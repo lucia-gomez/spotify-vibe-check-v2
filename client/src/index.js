@@ -9,11 +9,20 @@ import { ThemeProvider, createGlobalStyle } from 'styled-components';
 const GlobalStyle = createGlobalStyle`
   body {
     color: ${props => props.theme.white};
-    background-color: ${props => props.theme.lightBlack};
+    background-color: ${props => props.theme.primary};
+    font-family: 'Montserrat';
   }
 
   html {
-    background-color: ${props => props.theme.lightBlack};
+    background-color: ${props => props.theme.primary};
+  }
+
+  span {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    font-weight: 600;
+    font-size: 0.875rem;
+    line-height: 1rem;
   }
 `
 

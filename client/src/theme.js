@@ -1,6 +1,8 @@
 export const theme = {
   black: "#000",
-  lightBlack: "#121212",
+  primary: "#121212",
+  secondary: "#181818",
+  hover: "#282828",
   lightGray: "#8b8b8b",
   gray: "#383838",
   white: "#fff",
