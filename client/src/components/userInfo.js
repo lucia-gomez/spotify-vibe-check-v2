@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import { ActionType, useStore } from '../state.tsx';
-import { serverUrl } from '../spotify';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretDown, faCaretUp } from '@fortawesome/free-solid-svg-icons'
 
@@ -47,8 +46,10 @@ const DropdownWrapper = styled.div`
 `;
 
 function Dropdown() {
+  const { state } = useStore();
+
   const logout = () => {
-    axios.get(serverUrl + '/logout');
+    axios.get(state.serverUrl + '/logout');
   }
 
   return (
@@ -63,11 +64,11 @@ export default function UserInfo() {
   const [isExpanded, setExpanded] = useState(false);
 
   useEffect(() => {
-    axios.get(serverUrl + '/user').then(response => {
+    axios.get(state.serverUrl + '/user').then(response => {
       const data = response.data.body;
       dispatch({ action: ActionType.SetUser, payload: data });
     });
-  }, [dispatch]);
+  }, [dispatch, state.serverUrl]);
 
   return (
     <Wrapper onClick={() => { setExpanded(prev => !prev) }}>

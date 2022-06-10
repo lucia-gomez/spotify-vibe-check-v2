@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { serverUrl } from '../spotify';
 import styled from 'styled-components';
+import { ActionType, useStore } from '../state.tsx';
 
 const PLAYLIST_ITEM_WIDTH = 180;
 
@@ -49,6 +50,7 @@ const PlaylistName = styled.p`
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
   display: -webkit-box;
+  color: ${props => props.theme.white};
 `;
 
 const PlaylistDescription = styled.p`
@@ -63,6 +65,7 @@ const PlaylistDescription = styled.p`
   font-weight: 500;
   font-size: 0.9em;
   box-lines: 2;
+  text-decoration: none;
 `;
 
 function PlaylistDesktop(props) {
@@ -128,10 +131,10 @@ function PlaylistMobile(props) {
 
 function Playlist(props) {
   return (
-    <div key={props.id}>
+    <>
       {PlaylistDesktop(props)}
       {PlaylistMobile(props)}
-    </div>
+    </>
   );
 }
 
@@ -147,16 +150,32 @@ const PlaylistsWrapper = styled.div`
 `;
 
 export default function Playlists() {
-  const [playlists, setPlaylists] = useState([]);
+  const { state, dispatch } = useStore();
+
+  const onSelect = useCallback(playlist => {
+    dispatch({ action: ActionType.SetPlaylist, payload: playlist });
+  }, [dispatch]);
+
   useEffect(() => {
-    axios.get(serverUrl + '/playlists').then(response => {
-      setPlaylists(response.data);
-    });
-  }, []);
+    if (state.playlists == null) {
+      axios.get(state.serverUrl + '/playlists').then(response => {
+        dispatch({ action: ActionType.SetPlaylists, payload: response.data });
+      });
+    }
+  }, [state.playlists, state.serverUrl, dispatch]);
 
   return (
     <PlaylistsWrapper>
-      {playlists.map(Playlist)}
+      {state.playlists != null && state.playlists.map(playlist =>
+        <Link
+          to="/token/playlist"
+          onClick={() => onSelect(playlist)}
+          key={playlist.id}
+          style={{ textDecoration: 'none' }}
+        >
+          {Playlist(playlist)}
+        </Link>
+      )}
     </PlaylistsWrapper>
   );
 }

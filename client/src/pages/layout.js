@@ -1,4 +1,8 @@
 import React from 'react';
+import {
+  Routes,
+  Route,
+} from "react-router-dom";
 import styled from 'styled-components';
 import Nav from '../components/nav';
 import Playlists from '../components/playlists';
@@ -20,13 +24,14 @@ const Page = styled.div`
 
 export default function PageLayout() {
   return (
-    <>
-      <Layout>
-        <Nav />
-        <Page>
-          <Playlists />
-        </Page>
-      </Layout>
-    </>
+    <Layout>
+      <Nav />
+      <Page>
+        <Routes>
+          <Route path="/playlist" element={<p>test</p>} />
+          <Route path="" element={<Playlists />}></Route>
+        </Routes>
+      </Page>
+    </Layout>
   );
 }

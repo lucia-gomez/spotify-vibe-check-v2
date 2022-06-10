@@ -1,15 +1,21 @@
 import React, { useContext, useReducer } from "react";
 
 export enum ActionType {
-  SetToken,
+  SetAccessToken,
+  SetRefreshToken,
   SetUser,
+  SetPlaylist,
+  SetPlaylists,
 }
 
 export type Action = { action: ActionType, payload: any };
 
 type State = {
-  isAuth: boolean,
-  token: string | null,
+  serverUrl: string,
+  accessToken: string | null,
+  refreshToken: string | null,
+  playlists: Array<any>,
+  playlist: any | null,
   userName: string | null,
   userPhotoUri: string | null,
 }
@@ -18,11 +24,15 @@ type Dispatch = (action: Action) => void;
 
 function Reducer(state: State, action: Action): State {
   switch (action.action) {
-    case ActionType.SetToken:
+    case ActionType.SetAccessToken:
       return {
         ...state,
-        isAuth: true,
-        token: action.payload,
+        accessToken: action.payload,
+      };
+    case ActionType.SetRefreshToken:
+      return {
+        ...state,
+        refreshToken: action.payload,
       };
     case ActionType.SetUser:
       return {
@@ -30,16 +40,33 @@ function Reducer(state: State, action: Action): State {
         userName: action.payload.display_name,
         userPhotoUri: action.payload.images[0]?.url,
       };
+    case ActionType.SetPlaylists:
+      return {
+        ...state,
+        playlists: action.payload,
+      };
+    case ActionType.SetPlaylist:
+      return {
+        ...state,
+        playlist: action.payload,
+      };
   }
 }
 
 const StateContext = React.createContext(undefined);
 const DispatchContext = React.createContext(undefined);
 
+const liveUrl = "https://spotify-vibe-check.herokuapp.com";
+const isDev = process.env.NODE_ENV !== 'production';
+const port = process.env.PORT || 8000;
+
 export const Provider = (props) => {
   const initialState: State = {
-    isAuth: false,
-    token: null,
+    accessToken: null,
+    refreshToken: null,
+    serverUrl: isDev ? "http://localhost:" + port : liveUrl,
+    playlists: null,
+    playlist: null,
     userName: null,
     userPhotoUri: null,
   };

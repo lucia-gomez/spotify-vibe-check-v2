@@ -1,33 +1,35 @@
-import React from 'react';
-import { SpotifyAuth } from 'react-spotify-auth';
-import { redirectUri, clientId, scopes, serverUrl } from './spotify';
-import axios from 'axios';
-import { ActionType, useStore } from './state.tsx';
+import React, { useEffect } from 'react';
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+} from "react-router-dom";
+import Login from './pages/login';
 import PageLayout from './pages/layout';
-
-import 'react-spotify-auth/dist/index.css';
+import { ActionType, useStore } from './state.tsx';
 
 function App() {
-  const { state, dispatch } = useStore();
+  const { dispatch } = useStore();
+  const urlParams = new URLSearchParams(window.location.search);
+  const accessToken = urlParams.get('access_token');
+  const refreshToken = urlParams.get('refresh_token');
 
-  const onAccessToken = (newToken) => {
-    if (newToken != null) {
-      axios.post(serverUrl + '/callback', { token: newToken });
-      dispatch({ action: ActionType.SetToken, payload: newToken });
-    }
-  };
+  useEffect(() => {
+    dispatch({ action: ActionType.SetAccessToken, payload: accessToken });
+  }, [dispatch, accessToken]);
+
+  useEffect(() => {
+    dispatch({ action: ActionType.SetRefreshToken, payload: refreshToken });
+  }, [dispatch, refreshToken]);
 
   return (
     <div className='app'>
-      {state.isAuth ?
-        <PageLayout />
-        : <SpotifyAuth
-          redirectUri={redirectUri}
-          clientID={clientId}
-          scopes={scopes}
-          onAccessToken={onAccessToken}
-        />
-      }
+      <BrowserRouter>
+        <Routes>
+          <Route path="/token/*" element={<PageLayout />} />
+          <Route path="/" element={<Login />} />
+        </Routes>
+      </BrowserRouter>
     </div>
   )
 }
