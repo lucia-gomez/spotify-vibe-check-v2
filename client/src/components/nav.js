@@ -27,7 +27,7 @@ export default function Nav() {
   return (
     <NavWrapper>
       <Logo src={SpotifyLogo} />
-      {location.pathname != '/token' && <BackButton />}
+      {location.pathname !== '/token' && <BackButton />}
       <UserInfo />
     </NavWrapper>
   );

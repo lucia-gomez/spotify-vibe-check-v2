@@ -6,6 +6,7 @@ import {
 import styled from 'styled-components';
 import Nav from '../components/nav';
 import Playlists from '../components/playlists';
+import PlaylistVibe from './playlistVibe';
 
 const Layout = styled.div`
   display: grid;
@@ -28,7 +29,7 @@ export default function PageLayout() {
       <Nav />
       <Page>
         <Routes>
-          <Route path="/playlist" element={<p>test</p>} />
+          <Route path="/playlist" element={<PlaylistVibe />} />
           <Route path="" element={<Playlists />}></Route>
         </Routes>
       </Page>

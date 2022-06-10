@@ -1,7 +1,6 @@
 import React from 'react';
-import styled from 'styled-components';
 import axios from 'axios';
-import { ActionType, useStore } from '../state.tsx';
+import { useStore } from '../state.tsx';
 
 export default function Login() {
   const { state } = useStore();
