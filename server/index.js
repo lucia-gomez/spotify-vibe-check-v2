@@ -22,7 +22,7 @@ const scopes = [
 
 const isDev = process.env.NODE_ENV !== 'production';
 const liveUrl = "https://spotify-vibe-check.herokuapp.com";
-const redirectUri = isDev ? "http://localhost:8000/callback" : + '/callback';
+const redirectUri = isDev ? "http://localhost:8000/callback" : liveUrl + '/callback';
 const clientUrl = isDev ? "http://localhost:3000" : liveUrl;
 
 app.use(express.static(path.resolve(__dirname, '../client/build')));
