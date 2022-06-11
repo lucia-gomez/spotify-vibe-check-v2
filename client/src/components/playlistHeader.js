@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import FastAverageColor from 'fast-average-color';
 
+var rgb = require('hsv-rgb');
+var hsv = require('rgb-hsv');
 const fac = new FastAverageColor();
 
 const Header = styled.div`
@@ -15,13 +17,20 @@ const Header = styled.div`
 `;
 
 const Wrapper = styled.div`
+  width: 100%;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
 
   @media only screen and (max-width: 576px) {
     flex-direction: column;
-    align-items: center;
+    align-items: unset;
+    /* align-items: center; */
   }
+`;
+
+const PlaylistImageWrapper = styled.div`
+  display: flex;
+  justify-content: center;
 `;
 
 const PlaylistImage = styled.img`
@@ -34,6 +43,7 @@ const PlaylistImage = styled.img`
 
   @media only screen and (max-width: 576px) {
     margin-right: 0px;
+    margin-bottom: 20px;
   }
 `;
 
@@ -41,10 +51,13 @@ const PlaylistTitle = styled.h1`
   margin: 0px;
   font-size: 72px;
   line-height: 72px;
+  margin-bottom: 12px;
+  text-overflow: ellipsis;
+  overflow: hidden;
 
   @media only screen and (max-width: 576px) {
-    font-size: 40px;
-    line-height: 40px;
+    font-size: 30px;
+    line-height: 30px;
   }
 `;
 
@@ -52,6 +65,11 @@ const PlaylistDescription = styled.p`
   margin: 0px;
   color: #ffffffb3;
   padding: 15px 0px;
+
+  @media only screen and (max-width: 576px) {
+    padding: 0px;
+    margin-bottom: 5px;
+  }
 `;
 
 const MetadataRow = styled.div`
@@ -77,17 +95,23 @@ export default function PlaylistVibe({ playlist }) {
 
   useEffect(() => {
     fac.getColorAsync(playlist.images[0]?.url).then(c => {
-      setAvgColor(c.hex);
+      const [r, g, b] = c.value;
+      let [h, s, v] = hsv(r, g, b);
+      s = Math.min(100, s + 20);
+      const rgbColorBright = rgb(h, s, v);
+      setAvgColor(`rgb(${rgbColorBright.join(',')})`);
     });
   }, [playlist.images]);
 
   return (
     <Header avgColor={avgColor}>
       <Wrapper>
-        <PlaylistImage src={playlist.images[0]?.url} />
+        <PlaylistImageWrapper>
+          <PlaylistImage src={playlist.images[0]?.url} />
+        </PlaylistImageWrapper>
         <div>
           <PlaylistTitle>{playlist.name}</PlaylistTitle>
-          <PlaylistDescription>{playlist.description}</PlaylistDescription>
+          {playlist.description && <PlaylistDescription>{playlist.description}</PlaylistDescription>}
           <MetadataRow>
             <h5>{playlist.owner.display_name}</h5>
             <MetadataDivider />
