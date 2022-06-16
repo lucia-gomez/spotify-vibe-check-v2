@@ -50,14 +50,12 @@ const PlaylistImage = styled.img`
 const PlaylistTitle = styled.h1`
   margin: 0px;
   font-size: 72px;
-  line-height: 72px;
   margin-bottom: 12px;
   text-overflow: ellipsis;
   overflow: hidden;
 
   @media only screen and (max-width: 576px) {
     font-size: 30px;
-    line-height: 30px;
   }
 `;
 

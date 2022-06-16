@@ -113,6 +113,28 @@ app.get('/playlists', async (req, res) => {
     } while (data.body.next !== null);
     res.status(200).send(playlists);
   } catch (ex) {
+    console.error(ex);
+    res.status(400);
+  }
+});
+
+app.get('/playlistTracks', async (req, res) => {
+  const playlistId = req.query.playlistId;
+  if (playlistId == null) {
+    res.status(400).send(null);
+  }
+
+  let tracks = [];
+  let data = null;
+  let i = 0;
+  try {
+    do {
+      data = await spotifyApi.getPlaylistTracks(playlistId, { offset: 100 * i++ })
+      tracks = tracks.concat(data.body.items);
+    } while (data.body.next != null);
+    res.status(200).send(tracks);
+  } catch (ex) {
+    console.error(ex);
     res.status(400);
   }
 });
