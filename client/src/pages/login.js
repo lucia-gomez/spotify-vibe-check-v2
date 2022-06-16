@@ -21,6 +21,12 @@ const LoginButton = styled.div`
   border-radius: 4px;
   display: flex;
   align-items: center;
+  cursor: pointer;
+  transition: transform 200ms cubic-bezier(0.4, 0, 1, 1);
+
+  :hover {
+    transform: scale(1.03);
+  }
 `;
 
 const SpotifyIcon = styled(FontAwesomeIcon)`
