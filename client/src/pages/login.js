@@ -1,6 +1,32 @@
 import React from 'react';
 import axios from 'axios';
+import styled from 'styled-components';
 import { useStore } from '../state.tsx';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSpotify } from '@fortawesome/free-brands-svg-icons';
+
+const PageCenter = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 80vh;
+`;
+
+const LoginButton = styled.div`
+  background-color: ${props => props.theme.green};
+  color: ${props => props.theme.white};
+  font-weight: 600;
+  width: 200px;
+  padding: 10px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+`;
+
+const SpotifyIcon = styled(FontAwesomeIcon)`
+  height: 30px;
+  margin-right: 10px;
+`;
 
 export default function Login() {
   const { state } = useStore();
@@ -13,5 +39,12 @@ export default function Login() {
     });
   };
 
-  return (<button onClick={onLogin}>Login</button>);
+  return (
+    <PageCenter>
+      <LoginButton onClick={onLogin}>
+        <SpotifyIcon icon={faSpotify} />
+        Login with Spotify
+      </LoginButton>
+    </PageCenter>
+  );
 }
